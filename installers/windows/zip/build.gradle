@@ -70,7 +70,7 @@ task executeBuild(type: Exec) {
 task buildAndRunGtest(type: Exec) {
     dependsOn executeBuild
     workingDir "$buildRoot"
-    commandLine 'make', 'run-test', 'TEST="gtest:all"'
+    commandLine 'make', 'test', 'TEST="gtest:all"'
 }
 
 task applyJavafxOverlay() {
