@@ -67,6 +67,12 @@ task executeBuild(type: Exec) {
     commandLine 'make', 'images'
 }
 
+task buildAndRunGtest(type: Exec) {
+    dependsOn executeBuild
+    workingDir "$buildRoot"
+    commandLine 'make', 'run-test', 'TEST="gtest:all"'
+}
+
 task applyJavafxOverlay() {
     dependsOn createJavafxOverlay
     outputs.dir(packagingDir)
@@ -85,7 +91,7 @@ task applyJavafxOverlay() {
 
 task copyImages() {
     dependsOn createJavafxOverlay
-    dependsOn executeBuild
+    dependsOn buildAndRunGtest
     dependsOn applyJavafxOverlay
 
     outputs.dir(packagingDir)

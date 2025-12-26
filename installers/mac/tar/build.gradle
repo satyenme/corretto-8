@@ -75,8 +75,14 @@ task executeBuild(type: Exec) {
     outputs.dir jdkResultingImage
 }
 
-task importAmazonCacerts(type: Exec) {
+task buildAndRunGtest(type: Exec) {
     dependsOn executeBuild
+    workingDir "$buildRoot"
+    commandLine 'make', 'run-test', 'TEST="gtest:all"'
+}
+
+task importAmazonCacerts(type: Exec) {
+    dependsOn buildAndRunGtest
     workingDir "${jdkResultingImage}/jdk1.${project.version.major}.0_${project.version.update}.jdk/Contents/Home/"
     // Default password for JSSE key store
     def keystore_password = "changeit"

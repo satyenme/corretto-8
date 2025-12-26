@@ -78,6 +78,11 @@ task executeBuild(type: Exec) {
     outputs.dir jdkResultingImage
 }
 
+task buildAndRunGtest(type: Exec) {
+    dependsOn executeBuild
+    workingDir "$buildRoot"
+    commandLine 'make', 'run-test', 'TEST="gtest:all"'
+}
 
 task bundleThirdPartyBinaries {
     dependsOn executeBuild
@@ -110,7 +115,7 @@ task importAmazonCacerts(type: Exec) {
 
 task copyBuildResults() {
     description 'Copy the JDK image and puts the results in build/.'
-    dependsOn executeBuild
+    dependsOn buildAndRunGtest
     dependsOn bundleThirdPartyBinaries
     dependsOn importAmazonCacerts
     if (project.correttoArch == 'x64') {
