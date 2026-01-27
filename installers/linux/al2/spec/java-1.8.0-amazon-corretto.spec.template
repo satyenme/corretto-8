@@ -356,7 +356,7 @@ fi
 %{java_home}/jre/bin
 %{java_home}/jre/lib
 
-%files debugsymbolsAdd a comment on  lines R378 to R379Add diff commentMarkdown input:  edit mode selected.WritePreviewAdd a suggestionHeadingBoldItalicQuoteCodeLinkUnordered listNumbered listTask listMentionReferenceSaved repliesAdd FilesPaste, drop, or click to add filesCancelCommentStart a reviewReturn to code
+%files debugsymbols
 %{java_home}/bin/*.diz
 %{java_home}/lib/*.diz
 %{java_home}/lib/server/*.diz
