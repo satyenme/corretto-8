@@ -118,15 +118,16 @@ task prepareArtifacts {
             delete "${buildDir}/${correttoMacDir}"
         }
         copy {
-            // Contents/Home/** may include files (LICENSE, ASSEMBLY_EXCEPTION,
-            // THIRD_PARTY_README) that are also copied from buildRoot below.
-            // Let the later buildRoot copies win, matching the previous behavior.
-            duplicatesStrategy = DuplicatesStrategy.INCLUDE
             from("${jdkResultingImage}/${correttoMacDir}") {
                 // Copy the entire Contents/Home tree so we don't miss any artifacts
                 include "Contents/Home/**"
                 include "Contents/Info.plist"
                 include "Contents/MacOS/**"
+                // These files are authored by the buildRoot copy below; exclude
+                // the JDK image's versions to avoid a duplicate-entry conflict.
+                exclude "Contents/Home/ASSEMBLY_EXCEPTION"
+                exclude "Contents/Home/LICENSE"
+                exclude "Contents/Home/THIRD_PARTY_README"
             }
             from(buildRoot) {
                 include 'ASSEMBLY_EXCEPTION'
