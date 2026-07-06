@@ -119,12 +119,8 @@ task prepareArtifacts {
         }
         copy {
             from("${jdkResultingImage}/${correttoMacDir}") {
-                include "Contents/Home/bin/**"
-                include "Contents/Home/include/**"
-                include "Contents/Home/jre/**"
-                include "Contents/Home/lib/**"
-                include "Contents/Home/man/man1/**"
-                include "Contents/Home/src.zip"
+                // Copy the entire Contents/Home tree so we don't miss any artifacts
+                include "Contents/Home/**"
                 include "Contents/Info.plist"
                 include "Contents/MacOS/**"
             }
