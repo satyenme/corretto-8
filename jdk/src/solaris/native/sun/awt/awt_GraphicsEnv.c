@@ -1962,7 +1962,24 @@ static Bool xrrGetInfoForScreen(XRRScreenResources *res,
 
     if (usingXinerama) {
         int nscreens = 0;
-        XineramaScreenInfo *screens = XineramaQueryScreens(awt_display, &nscreens);
+        XineramaScreenInfo *screens = NULL;
+        /*
+         * JDK 8 does not link against libXinerama; resolve XineramaQueryScreens
+         * at runtime via dlsym, mirroring the detection path in xineramaInit().
+         */
+        void *xineramaHandle = dlopen(VERSIONED_JNI_LIB_NAME("Xinerama", "1"),
+                                      RTLD_LAZY | RTLD_GLOBAL);
+        if (xineramaHandle == NULL) {
+            xineramaHandle = dlopen(JNI_LIB_NAME("Xinerama"), RTLD_LAZY | RTLD_GLOBAL);
+        }
+        if (xineramaHandle != NULL) {
+            XineramaQueryScreensFunc *queryScreens = (XineramaQueryScreensFunc*)
+                dlsym(xineramaHandle, "XineramaQueryScreens");
+            if (queryScreens != NULL) {
+                screens = (*queryScreens)(awt_display, &nscreens);
+            }
+            dlclose(xineramaHandle);
+        }
 
         if (!screens) {
             return False;
