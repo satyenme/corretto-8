@@ -118,6 +118,25 @@ typedef struct {
     RRMode          *modes;
 } XRROutputInfo;
 
+/*
+ * RandR 1.2 CRTC info. Mirrored verbatim from X.Org libXrandr Xrandr.h; the
+ * vendored copy is a RandR 1.1 snapshot and predates CRTC support. The field
+ * layout must match libXrandr exactly, since instances are returned by the
+ * real library via dlsym (see awt_XRRGetCrtcInfo).
+ */
+typedef struct _XRRCrtcInfo {
+    Time            timestamp;
+    int             x, y;
+    unsigned int    width, height;
+    RRMode          mode;
+    Rotation        rotation;
+    int             noutput;
+    RROutput        *outputs;
+    Rotation        rotations;
+    int             npossible;
+    RROutput        *possible;
+} XRRCrtcInfo;
+
 XRRScreenResources *XRRGetScreenResources (Display *dpy, Window window);
 
 void XRRFreeScreenResources (XRRScreenResources *resources);

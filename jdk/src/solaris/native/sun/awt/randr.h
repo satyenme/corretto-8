@@ -71,6 +71,31 @@ typedef unsigned short  SubpixelOrder;
 #define RR_Reflect_X            16
 #define RR_Reflect_Y            32
 
+/*
+ * Mode flags (RandR 1.2), used in XRRModeInfo.modeFlags.
+ * Mirrored from X.Org randrproto randr.h; the vendored copy above is a
+ * RandR 1.1 snapshot and predates these definitions.
+ */
+#define RR_HSyncPositive        0x00000001
+#define RR_HSyncNegative        0x00000002
+#define RR_VSyncPositive        0x00000004
+#define RR_VSyncNegative        0x00000008
+#define RR_Interlace            0x00000010
+#define RR_DoubleScan           0x00000020
+#define RR_CSync                0x00000040
+#define RR_CSyncPositive        0x00000080
+#define RR_CSyncNegative        0x00000100
+#define RR_HSkewPresent         0x00000200
+#define RR_BCast                0x00000400
+#define RR_PixelMultiplex       0x00000800
+#define RR_DoubleClock          0x00001000
+#define RR_ClockDivideBy2       0x00002000
+
+/* Connection states (RandR 1.2), used in XRROutputInfo.connection. */
+#define RR_Connected            0
+#define RR_Disconnected         1
+#define RR_UnknownConnection    2
+
 #define RRSetConfigSuccess              0
 #define RRSetConfigInvalidConfigTime    1
 #define RRSetConfigInvalidTime          2
